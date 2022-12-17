@@ -6,8 +6,3 @@ sym_link() {
     fi
     ln -sf "$2" "$1"
 }
-
-exit() {
-    echo "${NO_COLOR}"
-    command exit "$@"
-}

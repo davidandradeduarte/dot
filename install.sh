@@ -10,9 +10,9 @@ NO_COLOR='\033[0m'
 
 echo() {
     if [ "$1" == "-n" ]; then
-        command echo -n -e "${GREEN}$2"
+        command echo -n -e "${GREEN}$2${NO_COLOR}"
     else
-        command echo -e "${GREEN}$1"
+        command echo -e "${GREEN}$1${NO_COLOR}"
     fi
 }
 
