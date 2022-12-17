@@ -53,7 +53,7 @@ main() {
         full
     fi
 
-    echo -n "Done! :)"
+    echo "Done! :)"
     exit 0
 }
 
