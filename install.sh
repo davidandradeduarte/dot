@@ -57,7 +57,7 @@ main() {
     elif [ "$1" == "full" ]; then
         full
     else
-        echor "Invalid argument. Use 'basic' or 'full'.\nUsage: $0 [basic|full]"
+        echor "Invalid argument $1. Use 'basic' or 'full'."
         exit 1
     fi
 
