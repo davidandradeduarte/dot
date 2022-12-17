@@ -1,5 +1,6 @@
 FROM ubuntu:22.04
 ARG install_type="basic"
+ENV install_type=${install_type}
 
 RUN apt-get update && apt-get install -y curl git
 
