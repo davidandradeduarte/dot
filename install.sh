@@ -1,6 +1,44 @@
 #!/bin/sh
 
 REPO="dot"
+OS=$(uname -s)
+GREEN='\033[0;32m'
+alias echo='echo $GREEN'
+
+install_homebrew() {
+    if test ! $(which brew); then
+        echo "Installing Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+        echo "Updating Homebrew..."
+        brew update
+    fi
+}
+
+sym_link() {
+    if [ -f "$1" ] && [ ! -L "$1" ] && [ ! "$(readlink "$1")" == "$2" ]; then
+        mv "$1" "$1.bak"
+    fi
+    ln -sf "$2" "$1"
+}
+
+install_brew_packages() {
+    for package in "$@"; do
+        echo "Installing $package..."
+        if brew info "$package" | grep -q "Cask"; then
+            brew install --cask "$package"
+        else
+            brew install "$package"
+        fi
+    done
+}
+
+tap_brew() {
+    for tap in "$@"; do
+        echo "Tapping $tap..."
+        brew tap "$tap"
+    done
+}
 
 if [ -d "$HOME/.dotfiles" ]; then
     dotfiles_remote=$(git -C "$HOME/.dotfiles" remote get-url origin)
@@ -23,122 +61,91 @@ else
     git clone https://github.com/davidandradeduarte/$REPO.git "$HOME/.dotfiles"
 fi
 
-OS=$(uname -s)
-
 if [ "$1" == "simple" ]; then
     if [ "$OS" == "Darwin" ]; then
-        if test ! $(which brew); then
-            echo "Installing Homebrew..."
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        fi
+        install_homebrew
 
         taps=()
+        tap_brew "${taps[@]}"
 
-        for tap in "${taps[@]}"; do
-            echo "Tapping $tap..."
-            brew tap "$tap"
-        done
-
-        packages=(
-            git tmux vim
-        )
-
-        for package in "${packages[@]}"; do
-            echo "Installing $package..."
-            if brew info "$package" | grep -q "Cask"; then
-                brew install --cask "$package"
-            else
-                brew install "$package"
-            fi
-        done
+        packages=(git tmux vim)
+        install_brew_packages "${packages[@]}"
     elif [ "$OS" == "Linux" ]; then
         echo "Linux not implemented yet"
         exit 1
     fi
 
     echo "Setting up symlinks..."
-    if [ -f "$HOME/.gitconfig" ]; then
-        mv "$HOME/.gitconfig" "$HOME/.gitconfig.bak"
-    fi
-    if [ -f "$HOME/.tmux.conf" ]; then
-        mv "$HOME/.tmux.conf" "$HOME/.tmux.conf.bak"
-    fi
-    if [ -f "$HOME/.vimrc" ]; then
-        mv "$HOME/.vimrc" "$HOME/.vimrc.bak"
-    fi
-    ln -sf "$HOME/.dotfiles/.config/git/.gitconfig" "$HOME/.gitconfig"
-    ln -sf "$HOME/.dotfiles/.config/tmux/.tmux.conf" "$HOME/.tmux.conf"
-    ln -sf "$HOME/.dotfiles/.config/vim/.vimrc" "$HOME/.vimrc"
-fi
+    sym_link "$HOME/.gitconfig" "$HOME/.dotfiles/.config/git/.gitconfig"
+    sym_link "$HOME/.tmux.conf" "$HOME/.dotfiles/.config/tmux/.tmux.conf"
+    sym_link "$HOME/.vimrc" "$HOME/.dotfiles/.config/vim/.vimrc"
+else
+    if [ "$OS" == "Darwin" ]; then
+        install_homebrew
 
-if [ "$OS" == "Darwin" ]; then
-    if test ! $(which brew); then
-        echo "Installing Homebrew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
+        taps=()
+        tap_brew "${taps[@]}"
 
-    taps=()
+        packages=(
+            # Essentials
+            git tmux wget curl
+            # Shells
+            bash zsh fish nushell powershell
+            # Prompts
+            starship oh-my-posh
+            # Terminal Emulators
+            iterm2 alacritty kitty
+            # Editors
+            vim neovim nano visual-studio-code rider intellij-idea
+            # Browsers
+            google-chrome firefox brave-browser
+            # Messaging
+            slack microsoft-teams discord spotify zoom
+            # Languages
+            go rustup-init dotnet-sdk lua
+            # CLI Tools
+            kubectl kubectx k9s helm terraform terragrunt azure-cli bat exa fd fzf ripgrep htop ncdu tree jq lazygit
+            # Dev
+            docker
+            # Misc
+            openvpn-connect cloudflare-warp rectangle maccy meetingbar balenaetcher caffeine bitwarden
+        )
+        install_brew_packages "${packages[@]}"
 
-    for tap in "${taps[@]}"; do
-        echo "Tapping $tap..."
-        brew tap "$tap"
-    done
-
-    packages=(
-        # Essentials
-        git tmux wget curl
-        # Shells
-        bash zsh fish nushell powershell
-        # Prompts
-        starship oh-my-posh
-        # Terminal Emulators
-        iterm2 alacritty kitty
-        # Editors
-        vim neovim nano visual-studio-code rider intellij-idea
-        # Browsers
-        google-chrome firefox brave-browser
-        # Messaging
-        slack microsoft-teams discord spotify zoom
-        # Languages
-        go rustup-init dotnet-sdk lua
-        # CLI Tools
-        kubectl kubectx k9s helm terraform terragrunt azure-cli bat exa fd fzf ripgrep htop ncdu tree jq lazygit
-        # Dev
-        docker
-        # Misc
-        openvpn-connect cloudflare-warp rectangle maccy meetingbar balenaetcher caffeine bitwarden
-    )
-
-    for package in "${packages[@]}"; do
-        echo "Installing $package..."
-        if brew info "$package" | grep -q "Cask"; then
-            brew install --cask "$package"
-        else
-            brew install "$package"
+        # Extra
+        if [ ! -d "$HOME/.oh-my-zsh" ]; then
+            echo "Installing oh-my-zsh..."
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
         fi
-    done
 
-    if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        echo "Installing oh-my-zsh..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    fi
+        if [ ! -d "$HOME/.local/share/omf" ]; then
+            echo "Installing oh-my-fish..."
+            curl -L https://get.oh-my.fish | fish
+        fi
 
-    if [ ! -d "$HOME/.local/share/omf" ]; then
-        echo "Installing oh-my-fish..."
-        curl -L https://get.oh-my.fish | fish
-    fi
+        if [ ! -d "$HOME/.config/nu/plugins" ]; then
+            echo "Installing oh-my-nushell..."
+            nu --install oh-my-nu
+        fi
 
-    if [ ! -d "$HOME/.config/nu/plugins" ]; then
-        echo "Installing oh-my-nushell..."
-        nu --install oh-my-nu
-    fi
+        if [ ! -d "$HOME/.oh-my-posh" ]; then
+            echo "Installing oh-my-posh..."
+            pwsh -c "Install-Module oh-my-posh -Scope CurrentUser"
+        fi
 
-    if [ ! -d "$HOME/.oh-my-posh" ]; then
-        echo "Installing oh-my-posh..."
-        pwsh -c "Install-Module oh-my-posh -Scope CurrentUser"
+        echo "Setting up symlinks..."
+        sym_link "$HOME/.gitconfig" "$HOME/.dotfiles/.config/git/.gitconfig"
+        sym_link "$HOME/.tmux.conf" "$HOME/.dotfiles/.config/tmux/.tmux.conf"
+        sym_link "$HOME/.vimrc" "$HOME/.dotfiles/.config/vim/.vimrc"
+        sym_link "$HOME/.zshrc" "$HOME/.dotfiles/.config/zsh/.zshrc"
+        sym_link "$HOME/.config/fish/config.fish" "$HOME/.dotfiles/.config/fish/config.fish"
+        sym_link "$HOME/.config/nu/config.toml" "$HOME/.dotfiles/.config/nu/config.toml"
+        sym_link "$HOME/.config/starship.toml" "$HOME/.dotfiles/.config/starship.toml"
+        sym_link "$HOME/.config/omf" "$HOME/.dotfiles/.config/omf"
+
+    elif [ "$OS" == "Linux" ]; then
+        echo "Linux not implemented yet"
     fi
-elif [ "$OS" == "Linux" ]; then
-    echo "Linux not implemented yet"
 fi
 
 echo "Dotfiles installed!"
