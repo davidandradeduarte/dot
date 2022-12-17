@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
 DOTFILES_REMOTE_SSH="git@github.com:davidandradeduarte/dot.git"

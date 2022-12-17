@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 sym_link() {
     if [ -f "$1" ] && [ ! -L "$1" ] && [ ! "$(readlink "$1")" == "$2" ]; then

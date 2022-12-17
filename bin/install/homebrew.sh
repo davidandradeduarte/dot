@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 install_homebrew() {
     if test ! $(which brew); then

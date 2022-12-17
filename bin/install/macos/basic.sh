@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 basic_macos() {
     install_homebrew
