@@ -54,7 +54,6 @@ main() {
     fi
 
     echo -n "Done! :)"
-    type exit
     exit 0
 }
 
