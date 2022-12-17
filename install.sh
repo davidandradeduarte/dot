@@ -52,6 +52,7 @@ main() {
     fi
 
     echo "Dotfiles installed! :)"
+    echo -e "\033[0m"
     exit 0
 }
 
