@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
-ARG install_type="basic"
-ENV install_type=${install_type}
+ARG install_type_arg="basic"
+ENV install_type=${install_type_arg}
 
 RUN apt-get update && apt-get install -y curl git
 
@@ -11,4 +11,4 @@ RUN useradd -m david
 USER david
 WORKDIR /home/david
 
-ENTRYPOINT ["/tmp/entrypoint.sh", "${install_type}"]
+ENTRYPOINT /tmp/entrypoint.sh $install_type

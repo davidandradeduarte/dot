@@ -1,5 +1,6 @@
 FROM fedora:37
-ARG install_type="basic"
+ARG install_type_arg="basic"
+ENV install_type=${install_type_arg}
 
 RUN dnf install -y curl git
 
@@ -10,4 +11,4 @@ RUN useradd -m david
 USER david
 WORKDIR /home/david
 
-ENTRYPOINT ["/tmp/entrypoint.sh", "${install_type}"]
+ENTRYPOINT /tmp/entrypoint.sh $install_type
