@@ -61,7 +61,7 @@ else
     git clone https://github.com/davidandradeduarte/$REPO.git "$HOME/.dotfiles"
 fi
 
-if [ "$1" == "simple" ]; then
+if [ "$1" == "basic" ]; then
     if [ "$OS" == "Darwin" ]; then
         install_homebrew
 
