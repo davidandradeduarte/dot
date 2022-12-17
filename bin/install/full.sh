@@ -9,6 +9,7 @@ full() {
 
     echo "Setting up symlinks..."
     # TODO
+    sym_link "$HOME/.bin" "$DOTFILES_DIR/.bin"
     # sym_link "$HOME/.gitconfig" "$DOTFILES_DIR/.config/git/.gitconfig"
     # sym_link "$HOME/.tmux.conf" "$DOTFILES_DIR/.config/tmux/.tmux.conf"
     # sym_link "$HOME/.vimrc" "$DOTFILES_DIR/.config/vim/.vimrc"

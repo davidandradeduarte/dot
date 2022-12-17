@@ -3,6 +3,7 @@
 DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
 DOTFILES_REMOTE_SSH="git@github.com:davidandradeduarte/dot.git"
 DOTFILES_DIR="$HOME/.dotfiles"
+
 OS=$(uname -s)
 GREEN='\033[0;32m'
 NO_COLOR='\033[0m'
@@ -52,7 +53,8 @@ main() {
         full
     fi
 
-    echo "Dotfiles installed! :)"
+    echo -n "Done! :)"
+    type exit
     exit 0
 }
 

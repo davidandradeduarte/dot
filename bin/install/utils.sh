@@ -8,6 +8,6 @@ sym_link() {
 }
 
 exit() {
-    echo -e "${NO_COLOR}"
+    echo "${NO_COLOR}"
     command exit "$@"
 }
