@@ -5,7 +5,14 @@ DOTFILES_REMOTE_SSH="git@github.com:davidandradeduarte/dot.git"
 DOTFILES_DIR="$HOME/.dotfiles"
 OS=$(uname -s)
 GREEN='\033[0;32m'
-alias echo='echo $GREEN'
+
+echo() {
+    if [ "$1" == "-n" ]; then
+        command echo -n -e "${GREEN}$2"
+    else
+        command echo -e "${GREEN}$1"
+    fi
+}
 
 clone() {
     if [ -d "$DOTFILES_DIR" ]; then
@@ -14,7 +21,7 @@ clone() {
             echo "Updating dotfiles..."
             git -C "$DOTFILES_DIR" pull
         else
-            echo "$DOTFILES_DIR already exists. Overwrite it? (y/n) \c"
+            echo -n "$DOTFILES_DIR already exists. Overwrite it? (y/n) "
             read -r answer
             if [ "$answer" == "y" ]; then
                 echo "Backing up old dotfiles..."
