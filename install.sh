@@ -1,10 +1,16 @@
 #!/bin/sh
 
-REPO="dot"
+# Constants
+DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
+DOTFILES_REMOTE_SSH="git@github.com:davidandradeduarte/dot.git"
+DOTFILES_DIR="$HOME/.dotfiles"
 OS=$(uname -s)
 GREEN='\033[0;32m'
+
+# Aliases
 alias echo='echo $GREEN'
 
+# Functions
 install_homebrew() {
     if test ! $(which brew); then
         echo "Installing Homebrew..."
@@ -40,28 +46,29 @@ tap_brew() {
     done
 }
 
-if [ -d "$HOME/.dotfiles" ]; then
-    dotfiles_remote=$(git -C "$HOME/.dotfiles" remote get-url origin)
-    if [ $dotfiles_remote == "https://github.com/davidandradeduarte/$REPO.git" ] ||
-        [ $dotfiles_remote == "git@github.com:davidandradeduarte/$REPO.git" ]; then
+# Main
+if [ -d "$DOTFILES_DIR" ]; then
+    remote=$(git -C "$DOTFILES_DIR" remote get-url origin)
+    if [ $remote == $DOTFILES_REMOTE_HTTPS ] || [ $remote == $DOTFILES_REMOTE_SSH ]; then
         echo "Updating dotfiles..."
-        git -C "$HOME/.dotfiles" pull
+        git -C "$DOTFILES_DIR" pull
     else
-        echo "$HOME/.dotfiles already exists but it's not davidandradeduarte/$REPO. Do you want to delete it and clone again? (y/n)"
+        echo -n "$DOTFILES_DIR already exists but it's not $DOTFILES_REMOTE_HTTPS nor $DOTFILES_REMOTE_SSH. Do you want to delete it and clone again? (y/n) "
         read -r answer
         if [ "$answer" == "y" ]; then
             echo "Deleting folder..."
-            rm -rf "$HOME/.dotfiles"
+            rm -rf "$DOTFILES_DIR"
             echo "Cloning dotfiles..."
-            git clone https://github.com/davidandradeduarte/$REPO.git "$HOME/.dotfiles"
+            git clone $DOTFILES_REMOTE_HTTPS "$DOTFILES_DIR"
         fi
     fi
 else
     echo "Cloning dotfiles..."
-    git clone https://github.com/davidandradeduarte/$REPO.git "$HOME/.dotfiles"
+    git clone $DOTFILES_REMOTE_HTTPS "$DOTFILES_DIR"
 fi
 
 if [ "$1" == "basic" ]; then
+    # Basic
     if [ "$OS" == "Darwin" ]; then
         install_homebrew
 
@@ -76,10 +83,11 @@ if [ "$1" == "basic" ]; then
     fi
 
     echo "Setting up symlinks..."
-    sym_link "$HOME/.gitconfig" "$HOME/.dotfiles/.config/git/.gitconfig"
-    sym_link "$HOME/.tmux.conf" "$HOME/.dotfiles/.config/tmux/.tmux.conf"
-    sym_link "$HOME/.vimrc" "$HOME/.dotfiles/.config/vim/.vimrc"
+    sym_link "$HOME/.gitconfig" "$DOTFILES_DIR/.config/git/.gitconfig"
+    sym_link "$HOME/.tmux.conf" "$DOTFILES_DIR/.config/tmux/.tmux.conf"
+    sym_link "$HOME/.vimrc" "$DOTFILES_DIR/.config/vim/.vimrc"
 else
+    # Full
     if [ "$OS" == "Darwin" ]; then
         install_homebrew
 
@@ -134,19 +142,20 @@ else
         fi
 
         echo "Setting up symlinks..."
-        sym_link "$HOME/.gitconfig" "$HOME/.dotfiles/.config/git/.gitconfig"
-        sym_link "$HOME/.tmux.conf" "$HOME/.dotfiles/.config/tmux/.tmux.conf"
-        sym_link "$HOME/.vimrc" "$HOME/.dotfiles/.config/vim/.vimrc"
-        sym_link "$HOME/.zshrc" "$HOME/.dotfiles/.config/zsh/.zshrc"
-        sym_link "$HOME/.config/fish/config.fish" "$HOME/.dotfiles/.config/fish/config.fish"
-        sym_link "$HOME/.config/nu/config.toml" "$HOME/.dotfiles/.config/nu/config.toml"
-        sym_link "$HOME/.config/starship.toml" "$HOME/.dotfiles/.config/starship.toml"
-        sym_link "$HOME/.config/omf" "$HOME/.dotfiles/.config/omf"
+        # TODO
+        # sym_link "$HOME/.gitconfig" "$DOTFILES_DIR/.config/git/.gitconfig"
+        # sym_link "$HOME/.tmux.conf" "$DOTFILES_DIR/.config/tmux/.tmux.conf"
+        # sym_link "$HOME/.vimrc" "$DOTFILES_DIR/.config/vim/.vimrc"
+        # sym_link "$HOME/.zshrc" "$DOTFILES_DIR/.config/zsh/.zshrc"
+        # sym_link "$HOME/.config/fish/config.fish" "$DOTFILES_DIR/.config/fish/config.fish"
+        # sym_link "$HOME/.config/nu/config.toml" "$DOTFILES_DIR/.config/nu/config.toml"
+        # sym_link "$HOME/.config/starship.toml" "$DOTFILES_DIR/.config/starship.toml"
+        # sym_link "$HOME/.config/omf" "$DOTFILES_DIR/.config/omf"
 
     elif [ "$OS" == "Linux" ]; then
         echo "Linux not implemented yet"
     fi
 fi
 
-echo "Dotfiles installed!"
+echo "Dotfiles installed! :)"
 exit 0
