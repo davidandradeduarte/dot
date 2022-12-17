@@ -1,10 +1,12 @@
 #!/bin/bash
 
 full() {
+    echo "Setting up full environment..."
+
     if [ "$OS" == "Darwin" ]; then
         full_macos
     elif [ "$OS" == "Linux" ]; then
-        echo "Linux not implemented yet"
+        echo "Linux not supported yet."
     fi
 
     echo "Setting up symlinks..."

@@ -6,6 +6,7 @@ DOTFILES_DIR="$HOME/.dotfiles"
 
 OS=$(uname -s)
 GREEN='\033[0;32m'
+RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
 echo() {
@@ -14,6 +15,10 @@ echo() {
     else
         command echo -e "${GREEN}$1${NO_COLOR}"
     fi
+}
+
+echor() {
+    command echo -e "${RED}$1${NO_COLOR}"
 }
 
 clone() {
@@ -49,8 +54,11 @@ main() {
 
     if [ "$1" == "basic" ]; then
         basic
-    else
+    elif [ "$1" == "full" ]; then
         full
+    else
+        echor "Invalid argument. Use 'basic' or 'full'.\nUsage: $0 [basic|full]"
+        exit 1
     fi
 
     echo "Done! :)"

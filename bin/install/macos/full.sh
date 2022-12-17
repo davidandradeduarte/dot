@@ -37,6 +37,11 @@ full_macos() {
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
 
+    if [ ! -d "$HOME/.oh-my-bash" ]; then
+        echo "Installing oh-my-bash..."
+        bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+    fi
+
     if [ ! -d "$HOME/.local/share/omf" ]; then
         echo "Installing oh-my-fish..."
         curl -L https://get.oh-my.fish | fish
