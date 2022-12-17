@@ -5,6 +5,7 @@ DOTFILES_REMOTE_SSH="git@github.com:davidandradeduarte/dot.git"
 DOTFILES_DIR="$HOME/.dotfiles"
 OS=$(uname -s)
 GREEN='\033[0;32m'
+NO_COLOR='\033[0m'
 
 echo() {
     if [ "$1" == "-n" ]; then
@@ -52,7 +53,6 @@ main() {
     fi
 
     echo "Dotfiles installed! :)"
-    echo -e "\033[0m"
     exit 0
 }
 

@@ -5,7 +5,6 @@ basic() {
         basic_macos
     elif [ "$OS" == "Linux" ]; then
         echo "Linux not implemented yet"
-        exit 1
     fi
 
     echo "Setting up symlinks..."
