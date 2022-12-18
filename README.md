@@ -32,7 +32,7 @@ DOTFILES_DIR=$HOME/.dotfiles /bin/bash <(curl -fsSL https://raw.githubuserconten
 
 </details>
 
-## Test with Docker
+## Docker
 
 Ubuntu:
 
