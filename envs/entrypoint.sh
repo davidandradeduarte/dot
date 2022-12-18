@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Arguments
-INSTALL_TYPE=${INSTALL_TYPE:-full}
-LOCAL=${LOCAL:-false}
-DOTFILES_DIR=${DOTFILES_DIR:-"$HOME/.dotfiles"}
-START_SHELL=${START_SHELL:-""}
+type=${type:-full}
+local=${local:-false}
+dir=${dir:-"$HOME/.dotfiles"}
+shell=${shell:-""}
 
 # Constants
 GREEN='\033[0;32m'
@@ -14,22 +14,22 @@ echo() {
     command echo -e "${GREEN}$1${NO_COLOR}"
 }
 
-if [ "$LOCAL" == "true" ]; then
+if [ "$local" == "true" ]; then
     echo "Using local dotfiles..."
-    DOTFILES_DIR=$DOTFILES_DIR INSTALL_TYPE=$INSTALL_TYPE LOCAL="true" \
+    dir=$dir type=$type local="true" \
         /bin/bash /home/david/.dotfiles/install.sh
 else
     echo "Using remote dotfiles..."
-    INSTALL_TYPE=$INSTALL_TYPE \
+    type=$type \
         /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/install.sh)
 fi
 
 if [ $? -eq 0 ]; then
-    if [ -z "$START_SHELL" ]; then
+    if [ -z "$shell" ]; then
         echo "Launching $SHELL..."
         exec "$SHELL"
     else
-        echo "Launching $START_SHELL..."
-        exec "$START_SHELL"
+        echo "Launching $shell..."
+        exec "$shell"
     fi
 fi

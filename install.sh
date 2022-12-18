@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Arguments
-INSTALL_TYPE=${INSTALL_TYPE:-full}
-DOTFILES_DIR=${DOTFILES_DIR:-"$HOME/.dotfiles"}
-LOCAL=${LOCAL:-false}
+type=${type:-full}
+dir=${dir:-"$HOME/.dotfiles"}
+local=${local:-false}
 
 # Editable settings
 DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
@@ -27,45 +27,52 @@ echor() {
     command echo -e "${RED}$1${NO_COLOR}"
 }
 
+backup_dir() {
+    if [ -d "$1" ]; then
+        echo "Backing up $1..."
+        mv "$1" "$1.bak"
+    fi
+}
+
 clone() {
-    if [ -d "$DOTFILES_DIR" ]; then
-        remote=$(git -C "$DOTFILES_DIR" remote get-url origin 2>/dev/null)
+    if [ -d "$dir" ]; then
+        remote=$(git -C "$dir" remote get-url origin 2>/dev/null)
         if [[ $remote == $DOTFILES_REMOTE_HTTPS ]] || [[ $remote == $DOTFILES_REMOTE_SSH ]]; then
             echo "Updating dotfiles..."
-            git -C "$DOTFILES_DIR" pull
+            git -C "$dir" pull
         else
-            echo -n "$DOTFILES_DIR already exists. Overwrite it? (y/n) "
+            echo -n "$dir already exists. Overwrite it? (y/n) "
             read -r answer
             if [ "$answer" == "y" ]; then
                 echo "Backing up old dotfiles..."
-                mv "$DOTFILES_DIR" "$HOME/.dotfiles.bak"
+                mv "$dir" "$HOME/.dotfiles.bak"
                 echo "Deleting folder..."
-                rm -rf "$DOTFILES_DIR"
+                rm -rf "$dir"
                 echo "Cloning dotfiles..."
-                git clone $DOTFILES_REMOTE_HTTPS "$DOTFILES_DIR"
+                git clone $DOTFILES_REMOTE_HTTPS "$dir"
             fi
         fi
     else
         echo "Cloning dotfiles..."
-        git clone $DOTFILES_REMOTE_HTTPS "$DOTFILES_DIR"
+        git clone $DOTFILES_REMOTE_HTTPS "$dir"
     fi
 }
 
 main() {
-    if [ "$LOCAL" != "true" ]; then
+    if [ "$local" != "true" ]; then
         clone
     fi
 
-    for file in $(find "$DOTFILES_DIR/bin/install" -name "*.sh"); do
+    for file in $(find "$dir/bin/install" -name "*.sh"); do
         . "$file"
     done
 
-    if [ "$INSTALL_TYPE" == "basic" ]; then
+    if [ "$type" == "basic" ]; then
         basic
-    elif [ "$INSTALL_TYPE" == "full" ]; then
+    elif [ "$type" == "full" ]; then
         full
     else
-        echor "Invalid argument $INSTALL_TYPE. Valid arguments are: basic, full"
+        echor "Invalid argument $type. Valid arguments are: basic, full"
         exit 1
     fi
 

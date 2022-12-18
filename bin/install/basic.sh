@@ -10,7 +10,9 @@ basic() {
     fi
 
     echo "Setting up symlinks..."
-    sym_link "$HOME/.gitconfig" "$DOTFILES_DIR/.config/git/.gitconfig"
-    sym_link "$HOME/.tmux.conf" "$DOTFILES_DIR/.config/tmux/.tmux.conf"
-    sym_link "$HOME/.vimrc" "$DOTFILES_DIR/.config/vim/.vimrc"
+    sym_link "$HOME/.bash_profile" "$dir/.config/bash/.bash_profile"
+    sym_link "$HOME/.bashrc" "$dir/.config/bash/.bashrc"
+    sym_link "$HOME/.gitconfig" "$dir/.config/git/.gitconfig"
+    sym_link "$HOME/.tmux.conf" "$dir/.config/tmux/.tmux.conf"
+    sym_link "$HOME/.vimrc" "$dir/.config/vim/.vimrc"
 }

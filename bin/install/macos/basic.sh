@@ -6,6 +6,6 @@ basic_macos() {
     taps=()
     tap_brew "${taps[@]}"
 
-    packages=(git tmux vim)
+    packages=(bash git tmux vim)
     install_brew_packages "${packages[@]}"
 }
