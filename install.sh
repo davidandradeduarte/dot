@@ -1,9 +1,15 @@
 #!/bin/bash
 
+# Arguments
+INSTALL_TYPE=${INSTALL_TYPE:-full}
+DOTFILES_DIR=${DOTFILES_DIR:-"$HOME/.dotfiles"}
+LOCAL=${LOCAL:-false}
+
+# Editable settings
 DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
 DOTFILES_REMOTE_SSH="git@github.com:davidandradeduarte/dot.git"
-DOTFILES_DIR="$HOME/.dotfiles"
 
+# Constants
 OS=$(uname -s)
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -46,18 +52,20 @@ clone() {
 }
 
 main() {
-    clone
+    if [ "$LOCAL" != "true" ]; then
+        clone
+    fi
 
     for file in $(find "$DOTFILES_DIR/bin/install" -name "*.sh"); do
         . "$file"
     done
 
-    if [ "$1" == "basic" ]; then
+    if [ "$INSTALL_TYPE" == "basic" ]; then
         basic
-    elif [ "$1" == "full" ]; then
+    elif [ "$INSTALL_TYPE" == "full" ]; then
         full
     else
-        echor "Invalid argument $1. Use 'basic' or 'full'."
+        echor "Invalid argument $INSTALL_TYPE. Valid arguments are: basic, full"
         exit 1
     fi
 

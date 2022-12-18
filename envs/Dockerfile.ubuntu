@@ -1,6 +1,13 @@
 FROM ubuntu:22.04
-ARG install_type_arg="basic"
-ENV install_type=${install_type_arg}
+
+ARG INSTALL_TYPE_ARG="full"
+ENV INSTALL_TYPE=${INSTALL_TYPE_ARG}
+
+ARG LOCAL_ARG="false"
+ENV LOCAL=${LOCAL_ARG}
+
+ARG START_SHELL_ARG
+ENV START_SHELL=${START_SHELL_ARG}
 
 RUN apt-get update && apt-get install -y curl git
 
@@ -11,4 +18,8 @@ RUN useradd -m david
 USER david
 WORKDIR /home/david
 
-ENTRYPOINT /tmp/entrypoint.sh $install_type
+COPY --chown=david:david . /tmp/.dotfiles
+RUN if [ "$LOCAL" = "true" ]; then mv /tmp/.dotfiles /home/david/.dotfiles; fi
+
+ENTRYPOINT INSTALL_TYPE=${INSTALL_TYPE} LOCAL=${LOCAL} DOTFILES_DIR=/home/david/.dotfiles START_SHELL=${START_SHELL} \
+    /tmp/entrypoint.sh
