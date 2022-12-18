@@ -11,6 +11,7 @@
 Set the following variables to change the default behavior:
 
 `INSTALL_TYPE` - Install type: `basic` or `full` (default: `full`)
+
 Example:
 
 ```sh
@@ -18,6 +19,7 @@ INSTALL_TYPE=basic /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davi
 ```
 
 `DOTFILES_DIR` - Dotfiles directory (default: `$HOME/.dotfiles`)
+
 Example:
 
 ```sh
@@ -45,6 +47,7 @@ _(all the previous variables are also available)_
 Set the following variables to change the default behavior:
 
 `LOCAL` - Use local dotfiles directory instead of cloning the repository: `true` or `false` (default: `false`)
+
 Example:
 
 ```sh
@@ -52,6 +55,7 @@ make ubuntu LOCAL=true
 ```
 
 `START_SHELL` - Start shell after the installation: either the binary name or full path (default: `$SHELL`)
+
 Example:
 
 ```sh
