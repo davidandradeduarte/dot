@@ -11,6 +11,6 @@ setup_bash() {
     if [ "$OS" == "Darwin" ]; then
         sym_link "$HOME/.bashrc" "$dir/.config/bash/macos/.bashrc"
     elif [ "$OS" == "Linux" ]; then
-        sym_link "$HOME/.bashrc" "$dir/.config/bash/ubuntu/.bashrc"
+        sym_link "$HOME/.bashrc" "$dir/.config/bash/linux/.bashrc"
     fi
 }

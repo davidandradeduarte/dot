@@ -2,9 +2,16 @@
 
 full() {
     if [ "$OS" == "Darwin" ]; then
-        full_macos
+        basic_macos
     elif [ "$OS" == "Linux" ]; then
-        echo "Linux not supported yet."
+        if [[ "$DISTRO" == *"fedora"* ]]; then
+            basic_fedora
+        elif [[ "$DISTRO" == *"ubuntu"* ]]; then
+            basic_ubuntu
+        else
+            echo "Unsupported Linux distribution."
+            exit 1
+        fi
     fi
 
     sym_link "$HOME/.bin" "$dir/.bin"

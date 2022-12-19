@@ -12,6 +12,7 @@ DOTFILES_REMOTE_SSH="git@github.com:davidandradeduarte/dot.git"
 
 # Constants
 OS=$(uname -s)
+DISTRO=$(cat /etc/os-release | grep "^ID=" | cut -d "=" -f 2)
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NO_COLOR='\033[0m'

@@ -1,5 +1,7 @@
 # Dotfiles
 
+Very straightforward dotfiles for my personal use. No automation tools being used, just plain shell scripts and symbolic links.
+
 ## Install
 
 ```sh
@@ -46,6 +48,12 @@ shell=tmux /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandrade
 ## Docker
 
 Ubuntu:
+
+```sh
+make ubuntu
+```
+
+Fedora:
 
 ```sh
 make ubuntu

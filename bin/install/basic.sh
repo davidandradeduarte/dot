@@ -4,7 +4,14 @@ basic() {
     if [ "$OS" == "Darwin" ]; then
         basic_macos
     elif [ "$OS" == "Linux" ]; then
-        basic_ubuntu
+        if [[ "$DISTRO" == *"fedora"* ]]; then
+            basic_fedora
+        elif [[ "$DISTRO" == *"ubuntu"* ]]; then
+            basic_ubuntu
+        else
+            echo "Unsupported Linux distribution."
+            exit 1
+        fi
     fi
 
     # Setup configuration
