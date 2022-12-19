@@ -78,17 +78,6 @@ make ubuntu local=true
 
 </details>
 
-`shell` - Startup shell after the installation: either the binary name or full path (default: `$SHELL`)
-
-<details>
-  <summary>Example</summary>
-  
-```sh
-make ubuntu shell=/bin/zsh
-```
-
-</details>
-
 ## Testing on macOS
 
 While there's no docker image for macOS, you can clone the repository and run the tests locally:

@@ -9,9 +9,11 @@ ENV local=${local_arg}
 ARG shell_arg
 ENV shell=${shell_arg}
 
+ARG dir_arg="/home/david/.dotfiles"
+ENV dir=${dir_arg}
+
 RUN dnf update -y && dnf upgrade -y \
-    && dnf install -y sudo \
-    && dnf install -y curl git
+    && dnf install -y sudo curl git
 
 COPY envs/entrypoint.sh /tmp/entrypoint.sh
 RUN chmod +x /tmp/entrypoint.sh
@@ -22,7 +24,7 @@ USER david
 WORKDIR /home/david
 
 COPY --chown=david:david . /tmp/.dotfiles
-RUN if [ "$local" = "true" ]; then mv /tmp/.dotfiles /home/david/.dotfiles; fi
+RUN if [ "$local" = "true" ]; then mv /tmp/.dotfiles ${dir}; fi
 
-ENTRYPOINT type=${type} local=${local} dir=/home/david/.dotfiles shell=${shell} \
+ENTRYPOINT type=${type} local=${local} dir=${dir} shell=${shell} \
     /tmp/entrypoint.sh
