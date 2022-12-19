@@ -57,17 +57,21 @@ clone() {
 
 copy_local() {
     current_dir=$(dirname "$(realpath "$0")")
+    if [ ! -d "$current_dir/.git" ]; then
+        echor "Error: local=true is only supported when running from the dotfiles repository."
+        exit 1
+    fi
     remote=$(git -C "$current_dir" remote get-url origin 2>/dev/null)
     if [[ $remote == $DOTFILES_REMOTE_HTTPS ]] || [[ $remote == $DOTFILES_REMOTE_SSH ]]; then
         echo "Copying dotfiles..."
         cp -r "$current_dir" "$dir"
     else
         echor "Error: local=true is only supported when running from the dotfiles repository."
+        exit 1
     fi
 }
 
 main() {
-    echo $(dirname "$(realpath "$0")")
     if [ "$ignore_errors" == "false" ]; then
         set -e
         trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG

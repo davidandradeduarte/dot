@@ -9,7 +9,7 @@ full() {
         elif [[ "$DISTRO" == *"ubuntu"* ]]; then
             basic_ubuntu
         else
-            echo "Unsupported Linux distribution."
+            echor "Error: Unsupported Linux distribution."
             exit 1
         fi
     fi
