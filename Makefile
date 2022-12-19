@@ -26,7 +26,7 @@ fedora:
 
 system:
 	@echo "\033[0;33m\c"
-	@echo "This is not a docker target. It will install dotfiles in your current system."
+	@echo "Warning: This is not a docker target. It will install dotfiles in your current system."
 	@read -p "Are you sure? [y/N] " ans && ans=$${ans:-N} ; \
 	if [ $${ans} = y ] || [ $${ans} = Y ]; then \
 		echo "\033[0m\c"; \

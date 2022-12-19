@@ -13,7 +13,4 @@ setup_bash() {
     elif [ "$OS" == "Linux" ]; then
         sym_link "$HOME/.bashrc" "$dir/.config/bash/linux/.bashrc"
     fi
-
-    # replace every find in $HOME/.bashrc for $user_replace with $user
-    # sed -i "s/$user/$user/g" "$HOME/.bashrc"
 }
