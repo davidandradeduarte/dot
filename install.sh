@@ -116,6 +116,8 @@ main() {
         exec "$shell"
     fi
 
+    set +e
+    trap - EXIT
     exit 0
 }
 
