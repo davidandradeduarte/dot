@@ -67,6 +67,7 @@ copy_local() {
 }
 
 main() {
+    echo $(dirname "$(realpath "$0")")
     if [ "$ignore_errors" == "false" ]; then
         set -e
         trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
