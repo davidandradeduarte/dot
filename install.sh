@@ -5,6 +5,7 @@ type=${type:-full}
 dir=${dir:-"$HOME/.dotfiles"}
 local=${local:-false}
 shell=${shell:-""}
+ignore_errors=${ignore_errors:-false}
 
 # Editable settings
 DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
@@ -55,9 +56,13 @@ clone() {
 }
 
 main() {
+    if [ "$ignore_errors" == "false" ]; then
+        set -e
+        trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+        trap 'echor "\"${last_command}\" command failed with exit code $?."' EXIT
+    fi
 
     sudo -v
-
     while true; do
         sudo -n true
         sleep 60
@@ -65,7 +70,11 @@ main() {
     done 2>/dev/null &
 
     if [ "$local" != "true" ]; then
+        echo "Using remote dotfiles..."
         clone
+    else
+        echo "Using local dotfiles..."
+        cp -r "$(dirname "$(realpath "$0")")" "$dir"
     fi
 
     for file in $(find "$dir/bin/install" -name "*.sh"); do

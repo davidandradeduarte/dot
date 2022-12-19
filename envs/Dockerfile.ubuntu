@@ -12,6 +12,9 @@ ENV shell=${shell_arg}
 ARG dir_arg="/home/david/.dotfiles"
 ENV dir=${dir_arg}
 
+ARG ignore_errors_arg="false"
+ENV ignore_errors=${ignore_errors_arg}
+
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y sudo curl git
 
@@ -24,7 +27,6 @@ USER david
 WORKDIR /home/david
 
 COPY --chown=david:david . /tmp/.dotfiles
-RUN if [ "$local" = "true" ]; then mv /tmp/.dotfiles ${dir}; fi
 
-ENTRYPOINT type=${type} local=${local} dir=${dir} shell=${shell} \
+ENTRYPOINT type=${type} local=${local} dir=${dir} shell=${shell} ignore_errors=${ignore_errors} \
     /tmp/entrypoint.sh
