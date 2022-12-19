@@ -1,9 +1,26 @@
-type?=full
-local?=false
+type?=""
+local?=""
 shell?=""
-dir?="/home/david/.dotfiles"
-ignore_errors?=false
-no_confirm?=false
+dir?=""
+ignore_errors?=""
+no_confirm?=""
+
+install:
+	@if [ $(no_confirm) != true ]; then \
+		echo "\033[0;33mWarning:\033[0m This is not a docker target. It will install dotfiles in your current system."; \
+		read -p "Continue? [y/N] " ans && ans=$${ans:-N} ; \
+		if [ $${ans} = y ] || [ $${ans} = Y ]; then \
+			type=$(type) local=$(local) shell=$(shell) dir=$(dir) ignore_errors=$(ignore_errors) \
+				./install.sh; \
+		fi; \
+		echo "\033[0m\c"; \
+	else \
+		type=$(type) local=$(local) shell=$(shell) dir=$(dir) ignore_errors=$(ignore_errors) \
+			./install.sh; \
+	fi
+
+uninstall:
+	@./uninstall.sh $(dir) $(no_confirm)
 
 ubuntu:
 	docker build -t ubuntu-$(type)-dotfiles \
@@ -25,19 +42,4 @@ fedora:
 	-f envs/Dockerfile.fedora .
 	docker run -it --rm fedora-$(type)-dotfiles
 
-system:
-	@if [ $(no_confirm) != true ]; then \
-		echo "\033[0;33mWarning:\033[0m This is not a docker target. It will install dotfiles in your current system."; \
-		read -p "Are you sure? [y/N] " ans && ans=$${ans:-N} ; \
-		if [ $${ans} = y ] || [ $${ans} = Y ]; then \
-			type=$(type) local=$(local) shell=$(shell) dir=$(dir) ignore_errors=$(ignore_errors) \
-				./install.sh; \
-		fi; \
-		echo "\033[0m\c"; \
-	else \
-		type=$(type) local=$(local) shell=$(shell) dir=$(dir) ignore_errors=$(ignore_errors) \
-			./install.sh; \
-	fi
-
-
-.PHONY: ubuntu fedora system
+.PHONY: install ubuntu fedora

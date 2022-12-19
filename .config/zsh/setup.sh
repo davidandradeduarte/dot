@@ -2,10 +2,10 @@
 
 setup_zsh() {
     set_error_trap
-    echo_inf "Setting up zsh..."
+    echo_inf "Setting up ${GREEN}zsh${NO_COLOR}..."
 
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        echo_inf "Installing oh-my-zsh..."
+        echo_inf "Installing ${GREEN}oh-my-zsh${NO_COLOR}..."
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     fi
 

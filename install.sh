@@ -38,18 +38,26 @@ echo_inf() {
     fi
 }
 
-# echo_warn <message>
+# echo_warn [-n] <message>
 # Prints a warning message to stdout.
 echo_warn() {
     set_error_trap
-    echo -e "${YELLOW}Warning: ${NO_COLOR}$1"
+    if [ "$1" == "-n" ]; then
+        command echo -n -e "${YELLOW}Warning: ${NO_COLOR}$2"
+    else
+        command echo -e "${YELLOW}Warning: ${NO_COLOR}$1"
+    fi
 }
 
-# echo_err <message>
+# echo_err [-n] <message>
 # Prints an error message to stdout.
 echo_err() {
     set_error_trap
-    echo -e "${RED}Error: ${NO_COLOR}$1"
+    if [ "$1" == "-n" ]; then
+        command echo -n -e "${RED}Error: ${NO_COLOR}$2"
+    else
+        command echo -e "${RED}Error: ${NO_COLOR}$1"
+    fi
 }
 
 # clone clones the dotfiles repository.
@@ -61,24 +69,24 @@ clone() {
     if [ -d "$dir" ]; then
         remote=$(git -C "$dir" remote get-url origin 2>/dev/null)
         if [[ $remote == $DOTFILES_REMOTE_HTTPS ]] || [[ $remote == $DOTFILES_REMOTE_SSH ]]; then
-            echo_inf "Updating dotfiles..."
+            echo_inf "Updating dotfiles in ${GREEN}$dir${NO_COLOR}..."
             if ! git -C "$dir" diff-index --quiet HEAD --; then
                 git -C "$dir" stash
             fi
             git -C "$dir" pull
         else
-            echo_inf -n "$dir already exists. Overwrite it? [y/n] "
-            read -r answer
-            if [ "$answer" == "y" ]; then
+            echo_warn -n "$dir already exists. It will be backed up and overwritten."
+            read -p "Continue? [y/N] " answer
+            if [[ $answer == "y" ]] || [[ $answer == "Y" ]]; then
                 epoch=$(date +%s)
-                echo_inf "Backing up $dir to $dir.bak.$epoch..."
+                echo_inf "Backing up ${GREEN}$dir${NO_COLOR} to ${GREEN}$dir.bak.$epoch${NO_COLOR}"
                 mv "$dir" "$dir.bak.$epoch"
                 echo_inf "Cloning dotfiles..."
                 git clone $DOTFILES_REMOTE_HTTPS "$dir"
             fi
         fi
     else
-        echo_inf "Cloning dotfiles..."
+        echo_inf "Cloning dotfiles to ${GREEN}$dir${NO_COLOR}..."
         git clone $DOTFILES_REMOTE_HTTPS "$dir"
     fi
 }
@@ -96,10 +104,10 @@ copy_local() {
     if [[ $remote == $DOTFILES_REMOTE_HTTPS ]] || [[ $remote == $DOTFILES_REMOTE_SSH ]]; then
         if [ -d "$dir" ]; then
             epoch=$(date +%s)
-            echo_inf "Backing up $dir to $dir.bak.$epoch..."
+            echo_inf "Backing up ${GREEN}$dir${NO_COLOR} to ${GREEN}$dir.bak.$epoch${NO_COLOR}"
             mv "$dir" "$dir.bak.$epoch"
         fi
-        echo_inf "Copying dotfiles from $current_dir to $dir..."
+        echo_inf "Copying dotfiles from ${GREEN}$current_dir${NO_COLOR} to ${GREEN}$dir${NO_COLOR}..."
         cp -r "$current_dir" "$dir"
     else
         echo_err"local=true is only supported when running locally and not from curl."
@@ -140,7 +148,7 @@ install() {
     elif [ "$type" == "full" ]; then
         full
     else
-        echo_err"invalid argument for type: $type. Valid arguments are: basic, full."
+        echo_err"invalid argument for type: ${RED}$type${NO_COLOR}. Valid arguments are: basic, full"
         exitc 1
     fi
 }
@@ -162,7 +170,7 @@ get_dotfiles() {
 launch_shell() {
     set_error_trap
     if [ -n "$shell" ]; then
-        echo_inf "Launching $shell..."
+        echo_inf "Launching ${GREEN}$shell${NO_COLOR}..."
         exec "$shell"
     fi
 }
@@ -200,7 +208,7 @@ ${NO_COLOR}"
     echo "---------------------------------------------"
 }
 
-# main is the entry point of the script.
+# main is the entry point of the install script.
 main() {
     set_error_trap
 

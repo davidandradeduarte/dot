@@ -7,7 +7,7 @@ install_apt_packages() {
     packages=("$@")
     for package in "${packages[@]}"; do
         if ! dpkg -s "$package" >/dev/null 2>&1; then
-            echo_inf "Installing $package..."
+            echo_inf "Installing ${GREEN}$package${NO_COLOR}..."
             sudo apt install -y "$package"
         fi
     done

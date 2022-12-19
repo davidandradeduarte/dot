@@ -1,10 +1,21 @@
 # Dotfiles
 
-Very straightforward dotfiles for my personal use.
+A dotfiles manager for my personal use.
 
 No automation tools being used, just plain shell scripts and symbolic links.
 
 Currently supported OSes: Ubuntu, Fedora, macOS.
+
+Use at your own risk.
+
+## Table of Contents
+
+- [Dotfiles](#dotfiles)
+  - [Install](#install)
+    - [Options](#options)
+  - [Testing](#testing)
+  - [Uninstall](#uninstall)
+    - [Options](#options-1)
 
 ## Install
 
@@ -23,7 +34,7 @@ Currently supported OSes: Ubuntu, Fedora, macOS.
 | `local`     | Use local dotfiles directory instead of cloning the repository<br>(this option is only available when running the script locally and not from curl) | `true` or `false` | `false` |
 
 <details>
-  <summary>Example with all options</summary>
+  <summary>Click to expand examples</summary>
   
 ```sh
 type=basic \
@@ -38,6 +49,30 @@ ignore_errors=true \
 
 Default values defined in [install.sh](install.sh).
 
+## Uninstall
+
+```sh
+/bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/uninstall.sh)
+```
+
+### Options
+
+| Option      | Description | Values | Default |
+| ----------- | ----------- | ------ | ------- |
+| `dir`       | Current dotfiles directory location | Any valid dotfiles directory path | no default, mandatory |
+| `no_confirm` | Skip confirmation prompt | `true` or `false` | `false` |
+
+<details>
+  <summary>Click to expand examples</summary>
+  
+```sh
+dir=$HOME/.dotfiles \
+no_confirm=true \
+/bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/uninstall.sh)
+```
+
+</details>
+
 ## Testing
 
 Docker:
@@ -50,14 +85,22 @@ make fedora <opt=value ...>
 Locally:
 
 ```sh
-make system <opt=value ...>
+make install <opt=value ...>
+```
+
+Uninstall:
+
+```sh
+make uninstall <opt=value ...>
 ```
 
 <details>
-  <summary>Example with all options</summary>
-  
+  <summary>Click to expand examples</summary>
+
+Docker:
+
 ```sh
-make system \
+make ubuntu \
   type=basic \
   dir=$HOME/.dotfiles \
   shell=/bin/zsh \
@@ -66,6 +109,28 @@ make system \
   no_confirm=true
 ```
 
+Locally:
+
+```sh
+make install \
+  type=basic \
+  dir=$HOME/.dotfiles \
+  shell=/bin/zsh \
+  local=true \
+  ignore_errors=true \
+  no_confirm=true
+```
+
+Uninstall:
+
+```sh
+make uninstall \
+  dir=$HOME/.dotfiles \
+  no_confirm=true
+```
+
 </details>
 
-See the [Makefile](Makefile) for the available targets and default values.
+See the [Makefile](Makefile) for the available targets.
+
+Default values defined in Dockerfiles at [envs/](envs/).

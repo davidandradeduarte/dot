@@ -17,7 +17,7 @@ install_homebrew() {
 install_brew_packages() {
     set_error_trap
     for package in "$@"; do
-        echo_inf "Installing $package..."
+        echo_inf "Installing ${GREEN}$package${NO_COLOR}..."
         if brew info "$package" | grep -q "Cask"; then
             brew install --cask "$package"
         else
@@ -31,7 +31,7 @@ install_brew_packages() {
 tap_brew() {
     set_error_trap
     for tap in "$@"; do
-        echo_inf "Tapping $tap..."
+        echo_inf "Tapping ${GREEN}$tap${NO_COLOR}..."
         brew tap "$tap"
     done
 }

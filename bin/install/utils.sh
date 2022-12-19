@@ -6,10 +6,10 @@ sym_link() {
     set_error_trap
     if [ -f "$1" ] && [ ! -L "$1" ] && [ ! "$(readlink "$1")" == "$2" ]; then
         epoch=$(date +%s)
-        echo_inf "Backing up $1 to $1.bak.$epoch"
+        echo_inf "Backing up ${GREEN}$1${NO_COLOR} to ${GREEN}$1.bak.$epoch${NO_COLOR}"
         mv "$1" "$1.bak.$epoch"
     fi
-    echo_inf "Creating symlink $1 -> $2"
+    echo_inf "Creating symlink {GREEN}$1${NO_COLOR} -> ${GREEN}$2${NO_COLOR}"
     ln -sf "$2" "$1"
 }
 
@@ -18,7 +18,7 @@ sym_link() {
 create_dir() {
     set_error_trap
     if [ ! -d "$1" ]; then
-        echo_inf "Creating directory $1"
+        echo_inf "Creating directory ${GREEN}$1${NO_COLOR}"
         mkdir -p "$1"
     fi
 }

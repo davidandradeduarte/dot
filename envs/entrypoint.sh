@@ -30,6 +30,6 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ -z "$shell" ]; then
-    echo_inf "Launching $SHELL..."
+    echo_inf "Launching ${GREEN}$SHELL${NO_COLOR}..."
     exec $SHELL
 fi
