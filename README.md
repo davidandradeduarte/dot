@@ -19,8 +19,8 @@ Currently supported OSes: Ubuntu, Fedora, macOS.
 | `type`      | Install type | `basic` or `full` | `full` |
 | `dir`       | Dotfiles directory location | Any valid path | `$HOME/.dotfiles` |
 | `shell`     | Startup shell after the installation | Either the binary name or full path | Current shell |
-| `local`     | Use local dotfiles directory instead of cloning the repository | `true` or `false` | `false` |
 | `ignore_errors` | Ignore errors during the installation | `true` or `false` | `false` |
+| `local`     | Use local dotfiles directory instead of cloning the repository<br>(this option is only available when running the script locally and not from curl) | `true` or `false` | `false` |
 
 <details>
   <summary>Example with all options</summary>
