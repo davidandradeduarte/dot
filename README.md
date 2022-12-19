@@ -32,9 +32,9 @@ type=basic /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandrade
 dir=$HOME/.dotfiles /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/install.sh)
 ```
 
-`shell` - Startup shell after the installation: either the binary name or full path (default: stays in the current shell)
-
 </details>
+
+`shell` - Startup shell after the installation: either the binary name or full path (default: stays in the current shell)
 
 <details>
   <summary>Example</summary>
