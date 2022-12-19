@@ -1,6 +1,10 @@
 # Dotfiles
 
-Very straightforward dotfiles for my personal use. No automation tools being used, just plain shell scripts and symbolic links.
+Very straightforward dotfiles for my personal use.
+
+No automation tools being used, just plain shell scripts and symbolic links.
+
+Currently supported OSes: Ubuntu, Fedora, macOS.
 
 ## Install
 
@@ -10,78 +14,43 @@ Very straightforward dotfiles for my personal use. No automation tools being use
 
 ### Options
 
-Set the following variables to change the default behavior:
-
-`type` - Install type: `basic` or `full` (default: `full`)
+| Option      | Description | Values | Default |
+| ----------- | ----------- | ------ | ------- |
+| `type`      | Install type | `basic` or `full` | `full` |
+| `dir`       | Dotfiles directory location | Any valid path | `$HOME/.dotfiles` |
+| `shell`     | Startup shell after the installation | Either the binary name or full path | Current shell |
+| `local`     | Use local dotfiles directory instead of cloning the repository | `true` or `false` | `false` |
+| `ignore_errors` | Ignore errors during the installation | `true` or `false` | `false` |
 
 <details>
-  <summary>Example</summary>
+  <summary>Example with all options</summary>
   
 ```sh
-type=basic /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/install.sh)
+type=basic \
+dir=$HOME/.dotfiles \
+shell=/bin/zsh \
+local=true \
+ignore_errors=true \
+/bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/install.sh)
 ```
 
 </details>
 
-`dir` - Dotfiles directory location (default: `$HOME/.dotfiles`)
+Default values defined in [install.sh](install.sh).
 
-<details>
-  <summary>Example</summary>
-  
-```sh
-dir=$HOME/.dotfiles /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/install.sh)
-```
+## Testing
 
-</details>
-
-`shell` - Startup shell after the installation: either the binary name or full path (default: stays in the current shell)
-
-<details>
-  <summary>Example</summary>
-  
-```sh
-shell=tmux /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/install.sh)
-```
-
-</details>
-
-## Docker
-
-Ubuntu:
+Docker:
 
 ```sh
-make ubuntu
+make ubuntu <opt=value ...>
+make fedora <opt=value ...>
 ```
 
-Fedora:
+Locally:
 
 ```sh
-make fedora
+make system <opt=value ...>
 ```
 
-See the [Makefile](Makefile) for the available targets.
-
-### Options
-
-_(all the previous variables are also available)_
-
-Set the following variables to change the default behavior:
-
-`local` - Use local dotfiles directory instead of cloning the repository: `true` or `false` (default: `false`)
-
-<details>
-  <summary>Example</summary>
-  
-```sh
-make ubuntu local=true
-```
-
-</details>
-
-## Testing on macOS
-
-While there's no docker image for macOS, you can clone the repository and run the tests locally:
-
-```sh
-shell=tmux local=true type=basic ./install.sh
-```
+See the [Makefile](Makefile) for the available targets and default values.

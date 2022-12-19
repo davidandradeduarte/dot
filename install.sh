@@ -40,7 +40,7 @@ clone() {
             fi
             git -C "$dir" pull
         else
-            echo -n "$dir already exists. Overwrite it? (y/n) "
+            echo -n "$dir already exists. Overwrite it? [y/n] "
             read -r answer
             if [ "$answer" == "y" ]; then
                 echo "Backing up old dotfiles..."
@@ -52,6 +52,17 @@ clone() {
     else
         echo "Cloning dotfiles..."
         git clone $DOTFILES_REMOTE_HTTPS "$dir"
+    fi
+}
+
+copy_local() {
+    current_dir=$(dirname "$(realpath "$0")")
+    remote=$(git -C "$current_dir" remote get-url origin 2>/dev/null)
+    if [[ $remote == $DOTFILES_REMOTE_HTTPS ]] || [[ $remote == $DOTFILES_REMOTE_SSH ]]; then
+        echo "Copying dotfiles..."
+        cp -r "$current_dir" "$dir"
+    else
+        echor "Error: local=true is only supported when running from the dotfiles repository."
     fi
 }
 
@@ -74,7 +85,7 @@ main() {
         clone
     else
         echo "Using local dotfiles..."
-        cp -r "$(dirname "$(realpath "$0")")" "$dir"
+        copy_local
     fi
 
     for file in $(find "$dir/bin/install" -name "*.sh"); do

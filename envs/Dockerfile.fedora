@@ -1,18 +1,18 @@
 FROM fedora:37
 
-ARG type_arg="full"
+ARG type_arg
 ENV type=${type_arg}
 
-ARG local_arg="false"
+ARG local_arg
 ENV local=${local_arg}
 
 ARG shell_arg
 ENV shell=${shell_arg}
 
-ARG dir_arg="/home/david/.dotfiles"
+ARG dir_arg
 ENV dir=${dir_arg}
 
-ARG ignore_errors_arg="false"
+ARG ignore_errors_arg
 ENV ignore_errors=${ignore_errors_arg}
 
 RUN dnf update -y && dnf upgrade -y \

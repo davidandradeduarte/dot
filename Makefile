@@ -24,4 +24,15 @@ fedora:
 	-f envs/Dockerfile.fedora .
 	docker run -it --rm fedora-$(type)-dotfiles
 
-.PHONY: ubuntu fedora
+system:
+	@echo "\033[0;33m\c"
+	@echo "This is not a docker target. It will install dotfiles in your current system."
+	@read -p "Are you sure? [y/N] " ans && ans=$${ans:-N} ; \
+	if [ $${ans} = y ] || [ $${ans} = Y ]; then \
+		echo "\033[0m\c"; \
+		type=$(type) local=$(local) shell=$(shell) dir=$(dir) ignore_errors=$(ignore_errors) \
+			./install.sh; \
+	fi
+	@echo "\033[0m\c"
+
+.PHONY: ubuntu fedora system
