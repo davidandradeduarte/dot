@@ -16,9 +16,8 @@ RUN apt-get update && apt-get upgrade -y \
 COPY envs/entrypoint.sh /tmp/entrypoint.sh
 RUN chmod +x /tmp/entrypoint.sh
 
-RUN adduser --disabled-password --gecos '' david
-RUN adduser david sudo
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -ms /bin/bash david
+RUN echo '%david ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER david
 WORKDIR /home/david
 

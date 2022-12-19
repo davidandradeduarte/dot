@@ -12,7 +12,7 @@ DOTFILES_REMOTE_SSH="git@github.com:davidandradeduarte/dot.git"
 
 # Constants
 OS=$(uname -s)
-DISTRO=$(cat /etc/os-release | grep "^ID=" | cut -d "=" -f 2)
+DISTRO=$(if [ "$OS" == "Linux" ]; then cat /etc/os-release | grep "^ID=" | cut -d "=" -f 2; fi)
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NO_COLOR='\033[0m'
@@ -55,6 +55,15 @@ clone() {
 }
 
 main() {
+
+    sudo -v
+
+    while true; do
+        sudo -n true
+        sleep 60
+        kill -0 "$$" || exit
+    done 2>/dev/null &
+
     if [ "$local" != "true" ]; then
         clone
     fi
