@@ -1,18 +1,23 @@
 #!/bin/bash
 
+# install_homebrew installs Homebrew if it is not installed.
 install_homebrew() {
+    set_error_trap
     if test ! $(which brew); then
-        echo "Installing Homebrew..."
+        echo_inf "Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
-        echo "Updating Homebrew..."
+        echo_inf "Updating Homebrew..."
         brew update
     fi
 }
 
+# install_brew_packages <package>...
+# Installs the given packages using Homebrew.
 install_brew_packages() {
+    set_error_trap
     for package in "$@"; do
-        echo "Installing $package..."
+        echo_inf "Installing $package..."
         if brew info "$package" | grep -q "Cask"; then
             brew install --cask "$package"
         else
@@ -21,9 +26,12 @@ install_brew_packages() {
     done
 }
 
+# tap_brew <tap>...
+# Taps the given Homebrew repositories.
 tap_brew() {
+    set_error_trap
     for tap in "$@"; do
-        echo "Tapping $tap..."
+        echo_inf "Tapping $tap..."
         brew tap "$tap"
     done
 }

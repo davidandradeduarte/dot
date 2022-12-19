@@ -3,6 +3,7 @@ local?=false
 shell?=""
 dir?="/home/david/.dotfiles"
 ignore_errors?=false
+no_confirm?=false
 
 ubuntu:
 	docker build -t ubuntu-$(type)-dotfiles \
@@ -25,14 +26,18 @@ fedora:
 	docker run -it --rm fedora-$(type)-dotfiles
 
 system:
-	@echo "\033[0;33m\c"
-	@echo "Warning: This is not a docker target. It will install dotfiles in your current system."
-	@read -p "Are you sure? [y/N] " ans && ans=$${ans:-N} ; \
-	if [ $${ans} = y ] || [ $${ans} = Y ]; then \
+	@if [ $(no_confirm) != true ]; then \
+		echo "\033[0;33mWarning:\033[0m This is not a docker target. It will install dotfiles in your current system."; \
+		read -p "Are you sure? [y/N] " ans && ans=$${ans:-N} ; \
+		if [ $${ans} = y ] || [ $${ans} = Y ]; then \
+			type=$(type) local=$(local) shell=$(shell) dir=$(dir) ignore_errors=$(ignore_errors) \
+				./install.sh; \
+		fi; \
 		echo "\033[0m\c"; \
+	else \
 		type=$(type) local=$(local) shell=$(shell) dir=$(dir) ignore_errors=$(ignore_errors) \
 			./install.sh; \
 	fi
-	@echo "\033[0m\c"
+
 
 .PHONY: ubuntu fedora system

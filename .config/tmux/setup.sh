@@ -1,7 +1,8 @@
 #!/bin/bash
 
 setup_tmux() {
-    echo "Setting up tmux..."
+    set_error_trap
+    echo_inf "Setting up tmux..."
 
     create_dir "$HOME/.config/tmux"
 

@@ -53,4 +53,19 @@ Locally:
 make system <opt=value ...>
 ```
 
+<details>
+  <summary>Example with all options</summary>
+  
+```sh
+make system \
+  type=basic \
+  dir=$HOME/.dotfiles \
+  shell=/bin/zsh \
+  local=true \
+  ignore_errors=true \
+  no_confirm=true
+```
+
+</details>
+
 See the [Makefile](Makefile) for the available targets and default values.

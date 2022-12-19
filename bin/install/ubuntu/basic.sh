@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# basic_ubuntu runs the basic installation script for Ubuntu.
 basic_ubuntu() {
-    echo "Setting up basic Ubuntu environment..."
+    set_error_trap
+    echo_inf "Setting up basic Ubuntu environment..."
 
-    echo "Updating packages..."
+    echo_inf "Updating packages..."
     sudo apt update &&
         sudo apt upgrade -y &&
         sudo apt autoremove -y

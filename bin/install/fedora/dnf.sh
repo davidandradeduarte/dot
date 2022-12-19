@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# install_dnf_packages <package>...
+# Installs the given packages using dnf.
 install_dnf_packages() {
+    set_error_trap
     packages=("$@")
     for package in "${packages[@]}"; do
-        echo "Installing $package..."
+        echo_inf "Installing $package..."
         sudo dnf install -y "$package"
     done
 }

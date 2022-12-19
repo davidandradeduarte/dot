@@ -11,9 +11,11 @@ ignore_errors=${ignore_errors:-false}
 GREEN='\033[0;32m'
 NO_COLOR='\033[0m'
 
-echo() {
-    command echo -e "${GREEN}$1${NO_COLOR}"
+echo_inf() {
+    command echo -e "${GREEN}Info: ${NO_COLOR}$1"
 }
+
+set -e
 
 if [ "$local" == "true" ]; then
     type=$type dir=$dir shell=$shell ignore_errors=$ignore_errors local=true
@@ -21,4 +23,13 @@ if [ "$local" == "true" ]; then
 else
     type=$type dir=$dir shell=$shell ignore_errors=$ignore_errors \
         /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/install.sh)
+fi
+
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+if [ -z "$shell" ]; then
+    echo_inf "Launching $SHELL..."
+    exec $SHELL
 fi

@@ -1,13 +1,18 @@
 #!/bin/bash
 
+# full_macos runs the full installation script for macOS.
 full_macos() {
-    echo "Setting up full macOS environment..."
+    set_error_trap
+    echo_inf "Setting up full macOS environment..."
 
+    # Package managers
     install_homebrew
 
+    # Taps
     taps=()
     tap_brew "${taps[@]}"
 
+    # Packages
     packages=(
         # Essentials
         git tmux wget curl
@@ -34,28 +39,18 @@ full_macos() {
     )
     install_brew_packages "${packages[@]}"
 
-    if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        echo "Installing oh-my-zsh..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    fi
+    # if [ ! -d "$HOME/.local/share/omf" ]; then
+    #     echo_inf "Installing oh-my-fish..."
+    #     curl -L https://get.oh-my.fish | fish
+    # fi
 
-    if [ ! -d "$HOME/.oh-my-bash" ]; then
-        echo "Installing oh-my-bash..."
-        bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-    fi
+    # if [ ! -d "$HOME/.config/nu/plugins" ]; then
+    #     echo_inf "Installing oh-my-nushell..."
+    #     nu --install oh-my-nu
+    # fi
 
-    if [ ! -d "$HOME/.local/share/omf" ]; then
-        echo "Installing oh-my-fish..."
-        curl -L https://get.oh-my.fish | fish
-    fi
-
-    if [ ! -d "$HOME/.config/nu/plugins" ]; then
-        echo "Installing oh-my-nushell..."
-        nu --install oh-my-nu
-    fi
-
-    if [ ! -d "$HOME/.oh-my-posh" ]; then
-        echo "Installing oh-my-posh..."
-        pwsh -c "Install-Module oh-my-posh -Scope CurrentUser"
-    fi
+    # if [ ! -d "$HOME/.oh-my-posh" ]; then
+    #     echo_inf "Installing oh-my-posh..."
+    #     pwsh -c "Install-Module oh-my-posh -Scope CurrentUser"
+    # fi
 }

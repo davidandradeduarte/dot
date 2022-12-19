@@ -1,6 +1,7 @@
 #!/bin/bash
 
 setup_fzf() {
-    echo "Setting up fzf..."
+    set_error_trap
+    echo_inf "Setting up fzf..."
     yes | $HOME/.fzf/install
 }
