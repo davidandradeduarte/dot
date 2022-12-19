@@ -127,8 +127,6 @@ main() {
         exec "$shell"
     fi
 
-    set +e
-    trap - EXIT
     exit_cleanly 0
 }
 
