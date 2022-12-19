@@ -78,8 +78,8 @@ main() {
     if [ "$no_confirm" == "true" ]; then
         uninstall
     else
-        echo_warn "This will delete all symbolic links in ${YELLOW}$HOME${NO_COLOR} that point to ${YELLOW}$dir${NO_COLOR} \
-and delete ${YELLOW}$dir${NO_COLOR} afterwards.
+        echo_warn "This will delete all symbolic links in ${YELLOW}$HOME/*${NO_COLOR} that point to ${YELLOW}$dir${NO_COLOR} \
+and delete it afterwards.
 It will not uninstall any packages, applications or OS settings that may have been added."
         read -p "Continue? [y/N] " answer
         if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then

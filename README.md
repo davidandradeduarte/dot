@@ -51,8 +51,13 @@ Default values defined in [install.sh](install.sh).
 ## Uninstall
 
 ```sh
+dir=$HOME/.dotfiles \
 /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/uninstall.sh)
 ```
+
+This will delete all symbolic links in `$HOME`/* that point to the provided dotfiles directory and delete it afterwards.
+
+It will not uninstall any packages, applications or OS settings that may have been added.
 
 ### Options
 
@@ -77,20 +82,20 @@ no_confirm=true \
 Docker:
 
 ```sh
-make ubuntu <opt=value ...>
-make fedora <opt=value ...>
+make ubuntu # <opt=value ...>
+make fedora # <opt=value ...>
 ```
 
 Locally:
 
 ```sh
-make install <opt=value ...>
+make install # <opt=value ...>
 ```
 
 Uninstall:
 
 ```sh
-make uninstall <opt=value ...>
+make uninstall # <opt=value ...>
 ```
 
 <details>
