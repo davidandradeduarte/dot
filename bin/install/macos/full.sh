@@ -1,6 +1,8 @@
 #!/bin/bash
 
 full_macos() {
+    echo "Setting up full macOS environment..."
+
     install_homebrew
 
     taps=()
@@ -32,6 +34,7 @@ full_macos() {
     )
     install_brew_packages "${packages[@]}"
 
+    # TODO: this can be moved to .config folders inside setup.sh
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
         echo "Installing oh-my-zsh..."
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

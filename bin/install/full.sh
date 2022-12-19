@@ -1,17 +1,14 @@
 #!/bin/bash
 
 full() {
-    echo "Setting up full environment..."
-
     if [ "$OS" == "Darwin" ]; then
         full_macos
     elif [ "$OS" == "Linux" ]; then
         echo "Linux not supported yet."
     fi
 
-    echo "Setting up symlinks..."
-    # TODO
     sym_link "$HOME/.bin" "$dir/.bin"
+    # echo "Setting up symlinks..."
     # sym_link "$HOME/.bash_profile" "$dir/.config/bash/.bash_profile"
     # sym_link "$HOME/.bashrc" "$dir/.config/bash/.bashrc"
     # sym_link "$HOME/.gitconfig" "$dir/.config/git/.gitconfig"

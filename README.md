@@ -40,12 +40,6 @@ Ubuntu:
 make ubuntu
 ```
 
-Fedora:
-
-```sh
-make fedora
-```
-
 See the [Makefile](Makefile) for the available targets.
 
 ### Options

@@ -9,12 +9,18 @@ ENV local=${local_arg}
 ARG shell_arg
 ENV shell=${shell_arg}
 
-RUN apt-get update && apt-get install -y curl git
+RUN apt-get update \
+    && apt-get install -y sudo \
+    && apt-get install -y curl git
 
 COPY envs/entrypoint.sh /tmp/entrypoint.sh
 RUN chmod +x /tmp/entrypoint.sh
 
-RUN useradd -m david
+RUN adduser --disabled-password \
+    --gecos '' david
+RUN adduser david sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> \
+    /etc/sudoers
 USER david
 WORKDIR /home/david
 

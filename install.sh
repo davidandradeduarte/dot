@@ -67,6 +67,14 @@ main() {
         . "$file"
     done
 
+    for file in $(find "$dir/.config" -name "setup.sh"); do
+        . "$file"
+    done
+
+    for file in $(find "$dir/.config" -name "install.sh"); do
+        . "$file"
+    done
+
     if [ "$type" == "basic" ]; then
         basic
     elif [ "$type" == "full" ]; then
