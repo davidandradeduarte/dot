@@ -7,10 +7,10 @@ basic() {
         basic_ubuntu
     fi
 
-    # Custom installers
-    # ...
-
     # Setup configuration
+    setup_bash
     setup_fzf
     setup_vim
+    setup_tmux
+    setup_git
 }

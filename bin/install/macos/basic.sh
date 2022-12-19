@@ -10,10 +10,4 @@ basic_macos() {
 
     packages=(bash git tmux vim fzf)
     install_brew_packages "${packages[@]}"
-
-    # Setup OS specific shells (before everything else)
-    setup_macos_bash
-
-    # Custom installers
-    # ...
 }

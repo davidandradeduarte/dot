@@ -11,9 +11,6 @@ basic_ubuntu() {
     packages=(bash git tmux vim)
     install_apt_packages "${packages[@]}"
 
-    # Setup OS specific shells (before everything else)
-    setup_ubuntu_bash
-
     # Custom installers
     install_fzf
 }

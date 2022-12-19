@@ -4,6 +4,7 @@
 type=${type:-full}
 dir=${dir:-"$HOME/.dotfiles"}
 local=${local:-false}
+shell=${shell:-""}
 
 # Editable settings
 DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
@@ -27,27 +28,21 @@ echor() {
     command echo -e "${RED}$1${NO_COLOR}"
 }
 
-backup_dir() {
-    if [ -d "$1" ]; then
-        echo "Backing up $1..."
-        mv "$1" "$1.bak"
-    fi
-}
-
 clone() {
     if [ -d "$dir" ]; then
         remote=$(git -C "$dir" remote get-url origin 2>/dev/null)
         if [[ $remote == $DOTFILES_REMOTE_HTTPS ]] || [[ $remote == $DOTFILES_REMOTE_SSH ]]; then
             echo "Updating dotfiles..."
+            if ! git -C "$dir" diff-index --quiet HEAD --; then
+                git -C "$dir" stash
+            fi
             git -C "$dir" pull
         else
             echo -n "$dir already exists. Overwrite it? (y/n) "
             read -r answer
             if [ "$answer" == "y" ]; then
                 echo "Backing up old dotfiles..."
-                mv "$dir" "$HOME/.dotfiles.bak"
-                echo "Deleting folder..."
-                rm -rf "$dir"
+                mv "$dir" "$dir.bak"
                 echo "Cloning dotfiles..."
                 git clone $DOTFILES_REMOTE_HTTPS "$dir"
             fi
@@ -85,6 +80,12 @@ main() {
     fi
 
     echo "Done! :)"
+
+    if [ -n "$shell" ]; then
+        echo "Launching $shell..."
+        exec "$shell"
+    fi
+
     exit 0
 }
 

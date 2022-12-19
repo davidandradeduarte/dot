@@ -6,3 +6,9 @@ sym_link() {
     fi
     ln -sf "$2" "$1"
 }
+
+create_dir() {
+    if [ ! -d "$1" ]; then
+        mkdir -p "$1"
+    fi
+}
