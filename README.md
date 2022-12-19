@@ -8,14 +8,13 @@ Currently supported OSes: Ubuntu, Fedora, macOS.
 
 Use at your own risk.
 
-## Table of Contents
+Table of Contents
+-----------------
 
-- [Dotfiles](#dotfiles)
-  - [Install](#install)
-    - [Options](#options)
-  - [Testing](#testing)
-  - [Uninstall](#uninstall)
-    - [Options](#options-1)
+- [Install](#install)
+- [Uninstall](#uninstall)
+- [Testing](#testing)
+- [License](#license)
 
 ## Install
 
@@ -133,4 +132,8 @@ make uninstall \
 
 See the [Makefile](Makefile) for the available targets.
 
-Default values defined in Dockerfiles at [envs/](envs/).
+Default values defined in Dockerfiles placed in [envs](envs) directory.
+
+## License
+
+[MIT](LICENSE)
