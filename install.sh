@@ -18,7 +18,7 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
-exit_cleanly() {
+exitc() {
     set +e
     trap - EXIT
     exit $1
@@ -65,7 +65,7 @@ copy_local() {
     current_dir=$(dirname "$(realpath "$0")")
     if [ ! -d "$current_dir/.git" ]; then
         echor "Error: local=true is only supported when running locally and not from curl."
-        exit_cleanly 1
+        exitc 1
     fi
     remote=$(git -C "$current_dir" remote get-url origin 2>/dev/null)
     if [[ $remote == $DOTFILES_REMOTE_HTTPS ]] || [[ $remote == $DOTFILES_REMOTE_SSH ]]; then
@@ -73,7 +73,7 @@ copy_local() {
         cp -r "$current_dir" "$dir"
     else
         echor "Error: local=true is only supported when running locally and not from curl."
-        exit_cleanly 1
+        exitc 1
     fi
 }
 
@@ -117,7 +117,7 @@ main() {
         full
     else
         echor "Error: invalid argument for type: $type. Valid arguments are: basic, full."
-        exit_cleanly 1
+        exitc 1
     fi
 
     echo "Done! :)"
@@ -127,7 +127,7 @@ main() {
         exec "$shell"
     fi
 
-    exit_cleanly 0
+    exitc 0
 }
 
 main "$@"
