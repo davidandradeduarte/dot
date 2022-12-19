@@ -15,5 +15,5 @@ basic_ubuntu() {
     setup_ubuntu_bash
 
     # Custom installers
-    install_fzf
+    # ...
 }
