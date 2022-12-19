@@ -56,7 +56,7 @@ make ubuntu
 Fedora:
 
 ```sh
-make ubuntu
+make fedora
 ```
 
 See the [Makefile](Makefile) for the available targets.
