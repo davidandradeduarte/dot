@@ -55,7 +55,7 @@ dir=$HOME/.dotfiles \
 /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/uninstall.sh)
 ```
 
-This will delete all symbolic links in `$HOME`/* that point to the provided dotfiles directory and delete it afterwards.
+This will delete all symbolic links in `$HOME/*` that point to the provided dotfiles directory and delete it afterwards.
 
 It will not uninstall any packages, applications or OS settings that may have been added.
 
