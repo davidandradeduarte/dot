@@ -8,7 +8,7 @@ basic() {
     fi
 
     # Custom installers
-    install_fzf
+    # ...
 
     # Setup configuration
     setup_fzf
