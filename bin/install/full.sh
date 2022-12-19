@@ -10,7 +10,7 @@ full() {
             basic_ubuntu
         else
             echor "Error: Unsupported Linux distribution."
-            exit 1
+            exit_cleanly 1
         fi
     fi
 

@@ -18,6 +18,12 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
+exit_cleanly() {
+    set +e
+    trap - EXIT
+    exit $1
+}
+
 echo() {
     if [ "$1" == "-n" ]; then
         command echo -n -e "${GREEN}$2${NO_COLOR}"
@@ -58,16 +64,16 @@ clone() {
 copy_local() {
     current_dir=$(dirname "$(realpath "$0")")
     if [ ! -d "$current_dir/.git" ]; then
-        echor "Error: local=true is only supported when running from the dotfiles repository."
-        exit 1
+        echor "Error: local=true is only supported when running locally and not from curl."
+        exit_cleanly 1
     fi
     remote=$(git -C "$current_dir" remote get-url origin 2>/dev/null)
     if [[ $remote == $DOTFILES_REMOTE_HTTPS ]] || [[ $remote == $DOTFILES_REMOTE_SSH ]]; then
         echo "Copying dotfiles..."
         cp -r "$current_dir" "$dir"
     else
-        echor "Error: local=true is only supported when running from the dotfiles repository."
-        exit 1
+        echor "Error: local=true is only supported when running locally and not from curl."
+        exit_cleanly 1
     fi
 }
 
@@ -110,8 +116,8 @@ main() {
     elif [ "$type" == "full" ]; then
         full
     else
-        echor "Invalid argument $type. Valid arguments are: basic, full"
-        exit 1
+        echor "Error: invalid argument for type: $type. Valid arguments are: basic, full."
+        exit_cleanly 1
     fi
 
     echo "Done! :)"
@@ -123,7 +129,7 @@ main() {
 
     set +e
     trap - EXIT
-    exit 0
+    exit_cleanly 0
 }
 
 main "$@"
