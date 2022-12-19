@@ -4,11 +4,14 @@
 full() {
     set_error_trap
     if [ "$OS" == "Darwin" ]; then
+        shared_macos
         full_macos
     elif [ "$OS" == "Linux" ]; then
         if [[ "$DISTRO" == *"fedora"* ]]; then
+            shared_fedora
             full_fedora
         elif [[ "$DISTRO" == *"ubuntu"* ]]; then
+            shared_ubuntu
             full_ubuntu
         else
             echo_err"Unsupported Linux distribution."
@@ -24,7 +27,7 @@ shared_full() {
     set_error_trap
 
     # Symbolic links
-    sym_link "$HOME/.bin" "$dir/.bin"
+    sym_link "$HOME/.bin" "$dir/bin"
 
     # Shells
     setup_bash

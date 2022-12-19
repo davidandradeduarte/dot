@@ -5,14 +5,8 @@ full_ubuntu() {
     set_error_trap
     echo_inf "Setting up full Ubuntu environment..."
 
-    echo_inf "Updating packages..."
-    sudo apt update &&
-        sudo apt upgrade -y &&
-        sudo apt autoremove -y
+    basic_ubuntu "no_echo"
 
-    packages=(bash zsh git tmux vim)
+    packages=(zsh)
     install_apt_packages "${packages[@]}"
-
-    # Custom installers
-    install_fzf
 }

@@ -5,25 +5,22 @@ full_macos() {
     set_error_trap
     echo_inf "Setting up full macOS environment..."
 
-    # Package managers
-    install_homebrew
+    basic_macos "no_echo"
 
-    # Taps
     taps=()
     tap_brew "${taps[@]}"
 
-    # Packages
     packages=(
         # Essentials
-        git tmux wget curl
+        wget curl
         # Shells
-        bash zsh fish nushell powershell
+        zsh fish nushell powershell
         # Prompts
         starship oh-my-posh
         # Terminal Emulators
         iterm2 alacritty kitty
         # Editors
-        vim neovim nano visual-studio-code rider intellij-idea
+        neovim nano visual-studio-code rider intellij-idea
         # Browsers
         google-chrome firefox brave-browser
         # Messaging
@@ -31,7 +28,7 @@ full_macos() {
         # Languages
         go rustup-init dotnet-sdk lua
         # CLI Tools
-        kubectl kubectx k9s helm terraform terragrunt azure-cli bat exa fd fzf ripgrep htop ncdu tree jq lazygit
+        kubectl kubectx k9s helm terraform terragrunt azure-cli bat exa fd ripgrep htop ncdu tree jq lazygit
         # Dev
         docker
         # Misc

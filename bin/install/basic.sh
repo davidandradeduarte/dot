@@ -5,11 +5,14 @@
 basic() {
     set_error_trap
     if [ "$OS" == "Darwin" ]; then
+        shared_macos
         basic_macos
     elif [ "$OS" == "Linux" ]; then
         if [[ "$DISTRO" == *"fedora"* ]]; then
+            shared_fedora
             basic_fedora
         elif [[ "$DISTRO" == *"ubuntu"* ]]; then
+            shared_ubuntu
             basic_ubuntu
         else
             echo_err"Unsupported Linux distribution."
