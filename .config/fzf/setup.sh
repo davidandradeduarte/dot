@@ -2,5 +2,5 @@
 
 setup_fzf() {
     echo "Setting up fzf..."
-    yes | ~/.fzf/install
+    yes | $HOME/.fzf/install
 }
