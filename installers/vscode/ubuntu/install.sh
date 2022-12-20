@@ -2,7 +2,7 @@
 
 install_vscode_ubuntu() {
     set_error_trap
-    echo_inf "Installing ${GREEN}vscode${NO_COLOR} for Ubuntu..."
+    echo_inf "Installing ${GREEN}vscode${NO_COLOR}..."
 
     sudo apt-get install wget gpg
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg

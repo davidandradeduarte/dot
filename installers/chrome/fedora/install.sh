@@ -2,10 +2,10 @@
 
 install_chrome_fedora() {
     set_error_trap
-    echo_inf "Installing ${GREEN}google-chrome${NO_COLOR} for Fedora..."
+    echo_inf "Installing ${GREEN}google-chrome${NO_COLOR}..."
 
     if [[ $(uname -m) == "aarch64" ]]; then
-        echo_warn "Skipping ${YELLOW}google-chrome${NO_COLOR} for Fedora on arm64..."
+        echo_warn "Skipping ${YELLOW}google-chrome${NO_COLOR} on arm64..."
         echo -en "Would you like to install ${YELLOW}chromium${NO_COLOR} instead?"
         if [ "$no_prompt" == "true" ]; then
             echo ""

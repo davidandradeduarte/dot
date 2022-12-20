@@ -2,7 +2,7 @@
 
 install_golang_ubuntu() {
     set_error_trap
-    echo_inf "Installing ${GREEN}golang${NO_COLOR} for Ubuntu..."
+    echo_inf "Installing ${GREEN}golang${NO_COLOR}..."
 
     if [[ "$(uname -m)" == "aarch64" ]]; then
         curl -OL https://go.dev/dl/go1.19.4.linux-arm64.tar.gz
