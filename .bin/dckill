@@ -1,4 +1,3 @@
 #!/bin/bash
 
-docker kill $(docker ps -q)
-docker container prune -f
+docker kill $(docker ps -q) || sleep 0.7 && docker container prune -f

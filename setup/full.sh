@@ -33,7 +33,5 @@ shared_full() {
 
     # Shells
     setup_zsh
-
-    # Other
-    # ...
+    setup_fish
 }

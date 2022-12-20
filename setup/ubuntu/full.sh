@@ -14,5 +14,6 @@ full_ubuntu() {
     install_chrome_ubuntu
     install_vscode_ubuntu
     install_lazygit_ubuntu
-    install_go_ubuntu
+    install_golang_ubuntu
+    install_fish_ubuntu
 }

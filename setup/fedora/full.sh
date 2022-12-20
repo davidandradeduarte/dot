@@ -7,7 +7,7 @@ full_fedora() {
 
     basic_fedora "no_echo"
 
-    packages=(zsh golang)
+    packages=(zsh golang fish)
     install_dnf_packages "${packages[@]}"
 
     # Custom installers
