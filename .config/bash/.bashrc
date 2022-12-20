@@ -6,7 +6,7 @@ esac
 
 # Path to your oh-my-bash installation.
 export OSH="$HOME/.oh-my-bash"
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/go/bin:$HOME/.bin
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
