@@ -12,10 +12,10 @@ setup_fedora_os_settings() {
         sudo sed -i '/\[main\]/a fastestmirror=True' /etc/dnf/dnf.conf
     fi
 
-    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-    sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    sudo dnf upgrade --refresh -y
-    sudo dnf groupupdate core -y
+    # sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    # sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    # sudo dnf upgrade --refresh -y
+    # sudo dnf groupupdate core -y
 
     if gsettings list-schemas 2>/dev/null | grep -q org.gnome.desktop.interface; then
         gsettings set org.gnome.desktop.interface show-battery-percentage true

@@ -15,6 +15,9 @@ ENV dir=${dir_arg}
 ARG ignore_errors_arg=false
 ENV ignore_errors=${ignore_errors_arg}
 
+ARG no_prompt_arg=false
+ENV no_prompt=${no_prompt_arg}
+
 RUN dnf update -y && dnf upgrade -y \
     && dnf install -y sudo curl git
 
@@ -28,5 +31,6 @@ WORKDIR /home/david
 
 COPY --chown=david:david . /tmp/.dotfiles
 
-ENTRYPOINT type=${type} local=${local} dir=${dir} shell=${shell} ignore_errors=${ignore_errors} \
+ENTRYPOINT type=${type} local=${local} dir=${dir} shell=${shell} \
+    ignore_errors=${ignore_errors} no_prompt=${no_prompt} \
     /tmp/entrypoint.sh

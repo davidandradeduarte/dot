@@ -31,6 +31,7 @@ Table of Contents
 | `shell`     | Startup shell after the installation | Either the binary name or full path | Current shell |
 | `ignore_errors` | Ignore errors during the installation | `true` or `false` | `false` |
 | `local`     | Use local dotfiles directory instead of cloning the repository<br>(this option is only available when running the script locally and not from curl) | `true` or `false` | `false` |
+| `no_prompt` | Skip confirmation prompts | `true` or `false` | `false` |
 
 <details>
   <summary>Click to expand examples</summary>
@@ -41,6 +42,7 @@ dir=$HOME/.dotfiles \
 shell=/bin/zsh \
 local=true \
 ignore_errors=true \
+no_prompt=true \
 /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/install.sh)
 ```
 
@@ -64,14 +66,14 @@ It will not uninstall any packages, applications or OS settings that may have be
 | Option      | Description | Values | Default |
 | ----------- | ----------- | ------ | ------- |
 | `dir`       | Current dotfiles directory location | Any valid dotfiles directory path | no default, mandatory |
-| `no_confirm` | Skip confirmation prompt | `true` or `false` | `false` |
+| `no_prompt` | Skip confirmation prompt | `true` or `false` | `false` |
 
 <details>
   <summary>Click to expand examples</summary>
   
 ```sh
 dir=$HOME/.dotfiles \
-no_confirm=true \
+no_prompt=true \
 /bin/bash <(curl -fsSL https://raw.githubusercontent.com/davidandradeduarte/dot/HEAD/uninstall.sh)
 ```
 
@@ -110,7 +112,7 @@ make ubuntu \
   shell=/bin/zsh \
   local=true \
   ignore_errors=true \
-  no_confirm=true
+  no_prompt=true
 ```
 
 Locally:
@@ -122,7 +124,8 @@ make install \
   shell=/bin/zsh \
   local=true \
   ignore_errors=true \
-  no_confirm=true
+  no_prompt=true \
+  install_no_prompt=true
 ```
 
 Uninstall:
@@ -130,7 +133,7 @@ Uninstall:
 ```sh
 make uninstall \
   dir=$HOME/.dotfiles \
-  no_confirm=true
+  no_prompt=true
 ```
 
 </details>

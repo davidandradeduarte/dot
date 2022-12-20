@@ -6,6 +6,7 @@ dir=${dir:-"$HOME/.dotfiles"}
 local=${local:-false}
 shell=${shell:-""}
 ignore_errors=${ignore_errors:-false}
+no_prompt=${no_prompt:-false}
 
 # Editable settings
 DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
@@ -76,7 +77,13 @@ clone() {
             git -C "$dir" pull
         else
             echo_warn -n "${YELLOW}$dir${NO_COLOR} already exists. It will be backed up and overwritten."
-            read -p "Continue? [y/N] " answer
+            if [ "$no_prompt" == "true" ]; then
+                echo ""
+                echo_warn "Skipping prompt. Answering 'y'."
+                answer="y"
+            else
+                read -p "Continue? [y/N] " answer
+            fi
             if [[ $answer == "y" ]] || [[ $answer == "Y" ]]; then
                 epoch=$(date +%s)
                 echo_inf "Backing up ${GREEN}$dir${NO_COLOR} to ${GREEN}$dir.bak.$epoch${NO_COLOR}"
@@ -124,10 +131,12 @@ set_error_trap() {
     fi
 }
 
-# load_scripts loads all the scripts in the bin/install and .config directories.
+# load_scripts loads all the scripts in the setup/* directory and
+# all the setup.sh files in the .config/ directory and
+# all the install.sh files in the installers/ directory.
 load_scripts() {
     set_error_trap
-    for file in $(find "$dir/bin/install" -name "*.sh"); do
+    for file in $(find "$dir/setup" -name "*.sh"); do
         . "$file"
     done
 
@@ -135,7 +144,7 @@ load_scripts() {
         . "$file"
     done
 
-    for file in $(find "$dir/.config" -name "install.sh"); do
+    for file in $(find "$dir/installers" -name "install.sh"); do
         . "$file"
     done
 }

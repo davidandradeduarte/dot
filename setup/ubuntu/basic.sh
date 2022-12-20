@@ -7,7 +7,7 @@ basic_ubuntu() {
         echo_inf "Setting up basic Ubuntu environment..."
     fi
 
-    packages=(bash git tmux vim)
+    packages=(wget bash git tmux vim)
     install_apt_packages "${packages[@]}"
 
     # Custom installers

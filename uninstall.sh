@@ -2,7 +2,7 @@
 
 # Arguments
 dir=${1:-$dir}
-no_confirm=${2:-$no_confirm}
+no_prompt=${2:-$no_prompt}
 
 # Editable settings
 DOTFILES_REMOTE_HTTPS="https://github.com/davidandradeduarte/dot.git"
@@ -75,7 +75,7 @@ main() {
         exit 1
     fi
 
-    if [ "$no_confirm" == "true" ]; then
+    if [ "$no_prompt" == "true" ]; then
         uninstall
     else
         echo_warn "This will delete all symbolic links in ${YELLOW}$HOME/*${NO_COLOR} that point to ${YELLOW}$dir${NO_COLOR} \

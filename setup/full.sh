@@ -26,16 +26,14 @@ full() {
 shared_full() {
     set_error_trap
 
+    shared_basic
+
     # Symbolic links
-    sym_link "$HOME/.bin" "$dir/bin"
+    sym_link "$HOME/.bin" "$dir/.bin"
 
     # Shells
-    setup_bash
     setup_zsh
 
     # Other
-    setup_fzf
-    setup_vim
-    setup_tmux
-    setup_git
+    # ...
 }

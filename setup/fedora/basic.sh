@@ -7,7 +7,7 @@ basic_fedora() {
         echo_inf "Setting up basic Fedora environment..."
     fi
 
-    packages=(bash git tmux vim)
+    packages=(wget bash git tmux vim)
     install_dnf_packages "${packages[@]}"
 
     # Custom installers

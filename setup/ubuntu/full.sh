@@ -9,4 +9,10 @@ full_ubuntu() {
 
     packages=(zsh)
     install_apt_packages "${packages[@]}"
+
+    # Custom installers
+    install_chrome_ubuntu
+    install_vscode_ubuntu
+    install_lazygit_ubuntu
+    install_go_ubuntu
 }
