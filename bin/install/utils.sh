@@ -9,7 +9,7 @@ sym_link() {
         echo_inf "Backing up ${GREEN}$1${NO_COLOR} to ${GREEN}$1.bak.$epoch${NO_COLOR}"
         mv "$1" "$1.bak.$epoch"
     fi
-    echo_inf "Creating symlink {GREEN}$1${NO_COLOR} -> ${GREEN}$2${NO_COLOR}"
+    echo_inf "Creating symlink ${GREEN}$1${NO_COLOR} -> ${GREEN}$2${NO_COLOR}"
     ln -sf "$2" "$1"
 }
 
