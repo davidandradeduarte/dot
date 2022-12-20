@@ -75,7 +75,7 @@ clone() {
             fi
             git -C "$dir" pull
         else
-            echo_warn -n "$dir already exists. It will be backed up and overwritten."
+            echo_warn -n "${YELLOW}$dir${NO_COLOR} already exists. It will be backed up and overwritten."
             read -p "Continue? [y/N] " answer
             if [[ $answer == "y" ]] || [[ $answer == "Y" ]]; then
                 epoch=$(date +%s)
@@ -97,7 +97,7 @@ copy_local() {
     set_error_trap
     current_dir=$(dirname "$(realpath "$0")")
     if [ ! -d "$current_dir/.git" ]; then
-        echo_err"local=true is only supported when running locally and not from curl."
+        echo_err"${RED}local=true${NO_COLOR} is only supported when running locally and not from curl."
         exitc 1
     fi
     remote=$(git -C "$current_dir" remote get-url origin 2>/dev/null)
@@ -110,7 +110,7 @@ copy_local() {
         echo_inf "Copying dotfiles from ${GREEN}$current_dir${NO_COLOR} to ${GREEN}$dir${NO_COLOR}..."
         cp -r "$current_dir" "$dir"
     else
-        echo_err"local=true is only supported when running locally and not from curl."
+        echo_err "${RED}$current_dir${NO_COLOR} is not a dotfiles repository. Can't use local mode."
         exitc 1
     fi
 }
@@ -148,7 +148,7 @@ install() {
     elif [ "$type" == "full" ]; then
         full
     else
-        echo_err"invalid argument for type: ${RED}$type${NO_COLOR}. Valid arguments are: basic, full"
+        echo_err"invalid argument for type: ${RED}$type${NO_COLOR}. Valid arguments are: basic, full."
         exitc 1
     fi
 }

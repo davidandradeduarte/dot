@@ -14,7 +14,7 @@ full() {
             shared_ubuntu
             full_ubuntu
         else
-            echo_err"Unsupported Linux distribution."
+            echo_err"Unsupported Linux distribution: ${RED}$DISTRO${NO_COLOR}."
             exitc 1
         fi
     fi

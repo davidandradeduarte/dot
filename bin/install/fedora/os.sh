@@ -23,6 +23,6 @@ setup_fedora_os_settings() {
         gsettings set org.gnome.desktop.interface clock-show-seconds true
         gsettings set org.gnome.desktop.interface clock-show-weekday true
     else
-        echo_warn "gnome not installed. Skipping gnome settings."
+        echo_warn "${YELLOW}gnome${NO_COLOR} not installed. Skipping ${YELLOW}gnome${NO_COLOR} settings."
     fi
 }
